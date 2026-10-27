@@ -124,9 +124,12 @@ button:active{transform:scale(.94)}
   <p class="msg" id="f1">You are special, and I am lucky to have you as a friend.</p>
   <p class="msg small" id="f2">With love, your friend 🤗</p>
   <button id="replay">Watch again 🔁</button>
+  <br><button id="dl">Download to keep ⬇️</button>
+  <p class="small" id="dlnote">Saves the card to your phone. It works offline!</p>
 </div></div>
 
 <script>
+var SRC='<!DOCTYPE html>\n'+document.documentElement.outerHTML;
 var cv=document.getElementById('c'),cx=cv.getContext('2d'),P=[];
 function size(){cv.width=innerWidth;cv.height=innerHeight}
 size();addEventListener('resize',size);
@@ -219,7 +222,11 @@ $('replay').onclick=function(){
   document.querySelectorAll('.nextBtn').forEach(function(b){b.classList.add('hide')});
   go(1);
 };
+$('dl').onclick=function(){try{var b=new Blob([SRC],{type:'text/html'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='alisha-birthday.html';document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(a.href)},4000)}catch(e){alert('Please open this card in Chrome or Safari to download it.')}};
+function updateDl(){var local=/^(file|content|filesystem):$/.test(location.protocol),ok=!local&&navigator.onLine!==false;$('dl').classList.toggle('hide',!ok);$('dlnote').classList.toggle('hide',!ok)}
+updateDl();addEventListener('online',updateDl);addEventListener('offline',updateDl);
 show('t1',300);
+
 </script>
 </body>
 </html>
